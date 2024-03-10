@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MandatoryAssignment.Creature">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAACAAAAAAAAAAAIAlAQAQAAAAEAAAAAAAAABAAA=</HashCode>
+      <FileName>Creature.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AttackItem" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="AttackItems" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MandatoryAssignment.World">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <AssociationLine Name="WorldObjects" Type="MandatoryAssignment.WorldObject">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.446" Y="0.07" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="WorldObject" Type="MandatoryAssignment.WorldObject">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.401" Y="0.156" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>MAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>World.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Creature" />
+      <Property Name="WorldObject" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Creatures" />
+      <Property Name="WorldObjects" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MandatoryAssignment.WorldObject">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <AssociationLine Name="DefenceItem" Type="MandatoryAssignment.Defenses.DefenceItemBase">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.1" Y="0.515" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAgAUAQAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>WorldObject.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DefenceItem" />
+      <Property Name="AttackItem" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MandatoryAssignment.Weapons.AttackItemBase">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAEAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapons\AttackItemBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.677" />
+  </Class>
+  <Class Name="MandatoryAssignment.Weapons.Axe" Collapsed="true">
+    <Position X="0.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapons\Axe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MandatoryAssignment.Weapons.Bow" Collapsed="true">
+    <Position X="2.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapons\Bow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MandatoryAssignment.Weapons.Sword" Collapsed="true">
+    <Position X="5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAIAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Weapons\Sword.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MandatoryAssignment.Defenses.DefenceItemBase">
+    <Position X="10" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAIAAAAAAABAAAAA=</HashCode>
+      <FileName>Defences\DefenceItemBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MandatoryAssignment.Defences.Armor" Collapsed="true">
+    <Position X="7.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAAAAAABAAAAA=</HashCode>
+      <FileName>Defences\Armor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MandatoryAssignment.Defences.Helmet" Collapsed="true">
+    <Position X="10" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAAAAAABAAAAA=</HashCode>
+      <FileName>Defences\Helmet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MandatoryAssignment.Defences.Shield" Collapsed="true">
+    <Position X="12.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAAAAAABAAAAA=</HashCode>
+      <FileName>Defences\Shield.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
