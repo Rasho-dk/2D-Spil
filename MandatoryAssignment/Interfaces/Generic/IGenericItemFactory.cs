@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MandatoryAssignment.Interfaces
+namespace MandatoryAssignment.Interfaces.Generic
 {
-    public enum WeaponType
+    public interface IGenericItemFactory<T, U>
     {
-        Axe,
-        Sword,
-        Bow
-
+        T Create(U type);
     }
 }

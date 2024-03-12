@@ -12,11 +12,14 @@ namespace MandatoryAssignment.Configuration
     {
         #region Singleton
         /// <summary>
-        /// Her laves en singleton af GameConfiguration.
-        /// Det er nyttigt, da vi kun skal bruge en instans af klassen, og vi kan derfor sikre os, at der kun er en instans
+        /// Her we have a singleton of GameConfiguration.
+        /// It is important to have a singleton, because we only need one instance of the class, and we can therefore ensure that there is only one instance
         /// </summary>
-
         private static GameConfiguration _instance = new GameConfiguration();
+
+        /// <summary>
+        /// This method is used to get the instance of the class.
+        /// </summary>
         public static GameConfiguration Instance
         {
             get
@@ -24,17 +27,82 @@ namespace MandatoryAssignment.Configuration
                 return _instance;
             }
         }
-
         #endregion End Singleton
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        private GameConfiguration()
+        {
+            //Her sættes default værdier for spillet
+            MaxX = 100;
+            MaxY = 100;
+            WorldName = "DefaultWorld";
+            SourceLevels = SourceLevels.All;
+            LogFilePath = "TraceGame.xml";
 
+        }
+
+
+        //private const string _filePath = "Confiq2D_Spil";
+        //private string getPath = Environment.GetEnvironmentVariable(_filePath);
         #region Properties to configure the game
-        public string GameName { get; set; }
-        public string Password { get; set; }
+        public int MaxX { get; set; }
+        public int MaxY { get; set; }
+        public string WorldName { get; set; }
+        /// <summary>
+        /// This property is used to log the XML file for the game if it is true then create Xmlfile .
+        /// </summary>
+        public bool LogXML { get; set; }
+        /// <summary>
+        /// This property is used to log the console for the game if it is true then log to the console.
+        /// </summary>
+        public bool LogConsole { get; set; }
         public SourceLevels SourceLevels { get; set; }
         public string LogFilePath { get; set; }
 
         #endregion End Properties to configure the game
+
+        /// <summary>
+        /// This method is used to get the configuration of the game.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="FileNotFoundException">Throw exception en case if there is no file found</exception>
+        public static GameConfiguration GetConfiguration()
+        {
+            XmlDocument xd = new XmlDocument();
+            xd.Load(LoggingPath.Path);
+
+            if(!File.Exists(LoggingPath.Path))
+            {
+                throw new FileNotFoundException("File not found", LoggingPath.Path);
+            }
+            XmlNode? xmlNode = xd.DocumentElement.SelectSingleNode("MaxX");
+
+            if (xmlNode != null)
+            {
+                Instance.MaxX = int.Parse(xmlNode.InnerText);
+            }
+
+            xmlNode = xd.DocumentElement.SelectSingleNode("MaxY");
+            if (xmlNode != null)
+            {
+                Instance.MaxY = int.Parse(xmlNode.InnerText);
+            }
+            xmlNode = xd.DocumentElement.SelectSingleNode("WorldName");
+            if (xmlNode != null)
+            {
+                Instance.WorldName = xmlNode.InnerText;
+            }
+            xmlNode = xd.DocumentElement.SelectSingleNode("SourceLevels");
+            if (xmlNode != null)
+            {
+                Instance.SourceLevels = (SourceLevels)Enum.Parse(typeof(SourceLevels), xmlNode.InnerText);
+            }
+            return Instance;
+        }
+
+    
 
 
     }

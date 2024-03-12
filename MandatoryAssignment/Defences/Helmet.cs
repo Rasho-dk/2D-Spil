@@ -9,10 +9,10 @@ namespace MandatoryAssignment.Defences
 {
     public class Helmet : DefenceItemBase
     {
-        public override string Name { get { return "Helmet"; } }
+        public override string Name { get { return "Helmet"; } set { Name = value; } }
 
-        public override int ReduceHitPoint { get { return 10; } }
+        public override int ReduceHitPoint { get { return 10; } set { ReduceHitPoint = value; } }
 
-        public override bool FoundInChest { get { return true; } }
+        public override bool FoundInChest { get { return true; } set { FoundInChest = value; } }
     }
 }

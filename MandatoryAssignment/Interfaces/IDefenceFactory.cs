@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MandatoryAssignment.Interfaces.Generic;
+using MandatoryAssignment.Interfaces.Types;
 
 namespace MandatoryAssignment.Interfaces
 {
-    public interface IDefenceFactory
+    public interface IDefenceFactory  : IGenericItemFactory<IDefence, DefenceType>
     {
-        IDefence CreateDefence(DefenceType type);
+        //IDefence Create(DefenceType type);
     }
 }

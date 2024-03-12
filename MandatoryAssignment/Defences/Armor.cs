@@ -10,10 +10,10 @@ namespace MandatoryAssignment.Defences
 {
     public class Armor : DefenceItemBase
     {
-        public override string Name { get { return "Armor"; } }
+        public override string Name { get { return "Armor"; } set { Name = value; } }
 
-        public override int ReduceHitPoint { get { return 20; } }
+        public override int ReduceHitPoint { get { return 20; } set { ReduceHitPoint = value; } }
 
-        public override bool FoundInChest { get { return true; } }
+        public override bool FoundInChest { get { return true; } set { FoundInChest = value; } }
     }
 }

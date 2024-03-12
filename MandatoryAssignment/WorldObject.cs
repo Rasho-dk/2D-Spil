@@ -31,7 +31,9 @@ namespace MandatoryAssignment
             DefenceItem = defenceItem;
         }
 
-       
-
+        public override string ToString()
+        {
+            return $"{{{nameof(Name)}={Name}, {nameof(Lootable)}={Lootable.ToString()}, {nameof(Removeable)}={Removeable.ToString()}, {nameof(X)}={X.ToString()}, {nameof(Y)}={Y.ToString()}, {nameof(AttackItem)}={AttackItem}, {nameof(DefenceItem)}={DefenceItem}}}";
+        }
     }
 }
