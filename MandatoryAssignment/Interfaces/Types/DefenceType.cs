@@ -5,8 +5,8 @@
     {
         Shield,
         Armor,
-        Helmet,
-        CreateDefence
+        Helmet
+        
 
     }
 }

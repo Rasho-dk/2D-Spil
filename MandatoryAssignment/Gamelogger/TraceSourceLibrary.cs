@@ -46,10 +46,15 @@ namespace MandatoryAssignment.Gamelogger
         /// </summary>
         private TraceSourceLibrary()
         {
-            traceSource = new TraceSource(GameConfiguration.Instance.WorldName);
 
-            traceSource.Switch = new SourceSwitch(GameConfiguration.Instance.WorldName,
-                "All");
+            if (traceSource == null)
+            {
+                ReloadError();
+            }
+
+            //traceSource = new TraceSource(GameConfiguration.Instance.WorldName,SourceLevels.All);
+            //traceSource.Switch = new SourceSwitch(GameConfiguration.Instance.WorldName, SourceLevels.All.ToString());
+
             if (GameConfiguration.Instance.LogXML)
             {
                 Reload();
@@ -60,6 +65,19 @@ namespace MandatoryAssignment.Gamelogger
             {
                 traceSource.Listeners.Add(new ConsoleTraceListener());
             }
+
+        }
+        private void ReloadError()
+        {
+
+            traceSource = new TraceSource("Confiq not found Path", SourceLevels.All);
+            traceSource.Switch = new SourceSwitch("Erro Confiq", SourceLevels.All.ToString());
+
+            string path = LoggingPath.LogPath;
+            path = path + "\\ErrorConfiq.xml";
+            traceSource.Listeners.Add(new XmlWriterTraceListener(new StreamWriter(path) { AutoFlush = true }));
+            traceSource.Listeners.Add(new ConsoleTraceListener());
+
 
         }
         /// <summary>
@@ -81,7 +99,7 @@ namespace MandatoryAssignment.Gamelogger
             }
         }
         /// <summary>
-        /// This method is used to log events in the game.
+        /// This method is used to different log events in the game.
         /// </summary> 
         /// <param name="eventType">Let the use choose the type of event to log</param>
         /// <param name="id">The id of the event</param> 

@@ -1,5 +1,7 @@
 ﻿using MandatoryAssignment.Defenses;
+using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Weapons;
+using System.Diagnostics;
 
 namespace MandatoryAssignment.Creature.Template
 {
@@ -50,29 +52,46 @@ namespace MandatoryAssignment.Creature.Template
         /// </summary>
         /// <param name="opponent">The opponent that the Creature is fighting against</param> 
         public void Fight(CreatureBase opponent)
-        {
-            Console.WriteLine($"{Name} is attacking {opponent.Name}!");
-            Attack(opponent);
+            {
+            TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, $"{Name} is fighting against {opponent.Name}!");
+            //Console.WriteLine($"{Name} is attacking {opponent.Name}!");
             opponent.Defend(this);
+
+            Attack(opponent);
             //ReceiveHit(opponent.Hit());
             if (!opponent.IsDead())
             {
-                Console.WriteLine($"{opponent.Name} is retaliating against {Name}!");
+                TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is retaliating against {Name}!");
+                //Console.WriteLine($"{opponent.Name} is retaliating against {Name}!");
                 opponent.Attack(this);
             }
             // Check if the creature is dead after the turn
             if (IsDead())
             {
-                Console.WriteLine($"{Name} is dead!");
+                //Console.WriteLine($"{Name} is dead!");
+                TraceSourceLibrary.LogInformation(1, $"{Name} is dead!");
+                TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is the winner!");
             }
             if (opponent.IsDead())
             {
-                Console.WriteLine($"{opponent.Name} is dead!");
+                //Console.WriteLine($"{opponent.Name} is dead!");
+                TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is dead!");
+                TraceSourceLibrary.LogInformation(1, $"{Name} is the winner!");
+
             }
             else
             {
-                Console.WriteLine($"{Name} has {HitPoint} hit points left!");
-                Console.WriteLine($"{opponent.Name} has {opponent.HitPoint} hit points left!");
+                if(HitPoint < 20)
+                {
+                    TraceSourceLibrary.LogEvent(TraceEventType.Warning, 1, $"{Name} should be careful, it has less than {HitPoint} hit points left!");
+                }
+                //Console.WriteLine($"{Name} has {HitPoint} hit points left!");
+                if(opponent.HitPoint < 20)
+                {
+                    TraceSourceLibrary.LogEvent(TraceEventType.Warning, 1, $"{opponent.Name} should be careful, it has less than {opponent.HitPoint} hit points left!");
+                    //Console.WriteLine($"{opponent.Name} has {opponent.HitPoint} hit points left!");
+                }
+
             }
         }
 
@@ -119,7 +138,7 @@ namespace MandatoryAssignment.Creature.Template
         /// <param name="damage">The damage that the Creature receives</param> 
         public void ReceiveHit(int damage)
         {
-             HitPoint -= damage;
+            HitPoint -= damage;
         }
 
         /// <summary>

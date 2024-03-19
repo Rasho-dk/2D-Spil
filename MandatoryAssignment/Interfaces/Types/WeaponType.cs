@@ -13,8 +13,6 @@ namespace MandatoryAssignment.Interfaces.Types
     {
         Axe,
         Sword,
-        Bow,
-        CreateWeapon
-
+        Bow
     }
 }

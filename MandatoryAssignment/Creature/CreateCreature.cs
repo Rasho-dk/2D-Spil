@@ -10,26 +10,49 @@ namespace MandatoryAssignment.Creature
 {
     public class CreateCreature : CreatureBase
     {
+        /// <summary>
+        /// Ths is the constructor for the CreateCreature class that inherits from the CreatureBase class and takes in the parameters id, name and hitPoint 
+        /// </summary>
+        /// <param name="id">The id of the creature</param>
+        /// <param name="name">The name of the creature</param>
+        /// <param name="hitPoint">The hitpoint of the creature</param>
         public CreateCreature(int id, string name, int hitPoint) : base(id, name, hitPoint)
         {
         }
-
+        /// <summary>
+        /// This method is used to attack another creature
+        /// </summary>
+        /// <param name="creatureBase">The creature to attack </param>
         protected override void Attack(CreatureBase creatureBase)
         {
             ReceiveHit(creatureBase.Hit());
-        }
 
+            //TODO: Add a method to handle the case when the creature dont have any attack items
+        }
+        /// <summary>
+        /// This method is used to defend against an attack
+        /// </summary>
+        /// <param name="creatureBase">The creature to defend against another creature</param> 
         protected override void Defend(CreatureBase creatureBase)
         {
-            foreach (var item in creatureBase.GetDefenceItems())
-            {
-                if (item is DefenceItemBase)
-                {
-                    ReceiveHit(item.ReduceHitPoint);
+            creatureBase.GetDefenceItems()
+                .OfType<DefenceItemBase>()
+                .ToList()
+                .ForEach(item => ReceiveHit(item.ReduceHitPoint));
 
-                }
+            //foreach (var item in creatureBase.GetDefenceItems())
+            //{
+            //    //If the item is a DefenceItemBase then the creature will receive a hit
+            //    if (item is DefenceItemBase)
+            //    {
+            //        ReceiveHit(item.ReduceHitPoint);
 
-            }
+            //    }
+
+            //    //TODO: Add a method to handle the case when the creature dont have any defence items
+
+
+            //}
         }
     }
 }

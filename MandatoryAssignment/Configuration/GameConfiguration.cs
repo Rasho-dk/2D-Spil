@@ -71,6 +71,10 @@ namespace MandatoryAssignment.Configuration
         public static GameConfiguration GetConfiguration()
         {
             XmlDocument xd = new XmlDocument();
+            if(LoggingPath.Path == null || LoggingPath.Path == string.Empty || !File.Exists(LoggingPath.Path))
+            {
+                throw new FileNotFoundException("File not found", LoggingPath.Path);
+            }
             xd.Load(LoggingPath.Path);
 
             if(!File.Exists(LoggingPath.Path))

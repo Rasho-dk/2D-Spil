@@ -10,6 +10,12 @@ namespace MandatoryAssignment.Factories
 {
     public class WeaponFactory : IWeaponFactory
     {
+        /// <summary>
+        /// This method is used to create a weapon of a specific type
+        /// </summary>
+        /// <param name="type">The type of weapon to create</param>
+        /// <returns>returns the weapon created based on the type</returns>//
+        /// <exception cref="ArgumentException">throw exception if the type is not valid</exception>  
         public IWeapon Create(WeaponType type)
         {
             switch (type)
@@ -20,18 +26,21 @@ namespace MandatoryAssignment.Factories
                     return new Weapons.Sword();
                 case WeaponType.Bow:
                     return new Weapons.Bow();
-                case WeaponType.CreateWeapon:
-                    // Allow user to create a new weapon
-                    Console.WriteLine("Enter the name of the new weapon:");
-                    string weaponName = Console.ReadLine();
-                    Console.WriteLine("Enter the hit of the new weapon:");
-                    int hit = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter the damage of the new weapon:");
-                    int weaponRange = int.Parse(Console.ReadLine());
-                    return new Weapons.CreateWeapon(weaponName, hit, weaponRange);
                 default:
                     throw new ArgumentException($"Invalid weapon type {type}");
             }
+        }
+        /// <summary>
+        /// This method is used to create a weapon based on the name, hit and range
+        /// </summary>
+        /// <param name="name">name of the weapon</param>
+        /// <param name="hit">hit points of the weapon</param>
+        /// <param name="range">range of the weapon</param>
+        /// <returns>returns the weapon created based on the name, hit and range</returns> 
+        public IWeapon Create(string name, int hit, int range)
+        {
+            return new Weapons.CreateWeapon(name, hit, range);
+      
         }
     }
 }

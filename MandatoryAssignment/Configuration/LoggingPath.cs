@@ -11,11 +11,14 @@ namespace MandatoryAssignment.Configuration
         /*
          * This class is used to get the path for the log file and the configuration file.
          */
-        private const string? _filePath = "Confiq2D_Spil";
+        public static string? _filePath { get; set; } = "Confiq2D_Spil";
         public static string? Path { get; set; } = Environment.GetEnvironmentVariable(_filePath);
 
-        private const string? _logPath = "LogPath2DSpil";
+        public const string? _logPath = "LogPath2DSpil";
         public static string? LogPath { get; set; } = Environment.GetEnvironmentVariable(_logPath);
+
+       
+         
 
     }
 }
