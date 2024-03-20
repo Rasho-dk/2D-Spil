@@ -16,28 +16,13 @@ namespace MandatoryAssignment.Creature
         }
 
         protected override void Attack(CreatureBase creatureBase)
-        {
-           
+        {   
             ReceiveHit(creatureBase.Hit());
         }
 
         protected override void Defend(CreatureBase creatureBase)
         {
-            creatureBase.GetDefenceItems()
-                .OfType<DefenceItemBase>()
-                .ToList()
-                .ForEach(item => ReceiveHit(item.ReduceHitPoint));
-
-            //foreach (var item in creatureBase.GetDefenceItems())
-            //{
-
-            //    if (item is DefenceItemBase)
-            //    {
-            //        ReceiveHit(item.ReduceHitPoint);
-
-            //    }
-
-            //}
+            ReceiveReduceHitPoint(ReduceHitPoint());
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MandatoryAssignment.Defences
     public class CreateDefence : DefenceItemBase
     {
         public override string Name { get; set; }
-        public override int ReduceHitPoint { get ; set; }
+        public override int ReduceHitPoint { get; set;}
         public override bool FoundInChest { get; set; }
 
         public CreateDefence()

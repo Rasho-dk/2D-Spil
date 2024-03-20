@@ -1,5 +1,6 @@
 ﻿using MandatoryAssignment.Creature.Template;
 using MandatoryAssignment.Defenses;
+using MandatoryAssignment.Liskov;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,11 +36,18 @@ namespace MandatoryAssignment.Creature
         /// <param name="creatureBase">The creature to defend against another creature</param> 
         protected override void Defend(CreatureBase creatureBase)
         {
-            creatureBase.GetDefenceItems()
-                .OfType<DefenceItemBase>()
-                .ToList()
-                .ForEach(item => ReceiveHit(item.ReduceHitPoint));
 
+            ReceiveReduceHitPoint(ReduceHitPoint());
+
+            //creatureBase.GetDefenceItems()
+            //    .OfType<DefenceItemBase>()
+            //    .ToList()
+            //    .ForEach(item => ReceiveReduceHitPoint(ReduceHitPoint()));
+
+
+            //TODO : Add a method to handle the case when the creature don't have any defence items
+
+            #region
             //foreach (var item in creatureBase.GetDefenceItems())
             //{
             //    //If the item is a DefenceItemBase then the creature will receive a hit
@@ -53,6 +61,8 @@ namespace MandatoryAssignment.Creature
 
 
             //}
+            #endregion
+
         }
     }
 }

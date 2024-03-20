@@ -1,27 +1,35 @@
-﻿using MandatoryAssignment.Defenses;
+﻿using MandatoryAssignment.Defences;
+using MandatoryAssignment.Defenses;
 using MandatoryAssignment.Gamelogger;
+using MandatoryAssignment.Interfaces;
+using MandatoryAssignment.Liskov;
 using MandatoryAssignment.Weapons;
 using System.Diagnostics;
 
 namespace MandatoryAssignment.Creature.Template
 {
-    public abstract class CreatureBase
+    public abstract class CreatureBase : IObject
     {
-
-        protected int Id { get; set; }
+        public int Id { get; set; }
         protected string Name { get; set; }
+
+        //protected int HitPoint { get; set; }
         protected int HitPoint { get; set; }
+       
+
         /// <summary>
         /// This property is used to generate random numbers using the Random class and Guid class to get a unique seed
         /// </summary>
-        protected Random RandomGenerator { get; } = new Random(Guid.NewGuid().GetHashCode());
+        //protected Random RandomGenerator { get; } = new Random(Guid.NewGuid().GetHashCode());
 
         //protected AttackItemBase AttackItem { get; set; }
-        protected DefenceItemBase DefenceItem { get; set; }
+        //protected DefenceItemBase DefenceItem { get; set; }
+        //protected AttackItemBase AttackItemBase { get; set; }
 
 
         private List<AttackItemBase> AttackItems;
         private List<DefenceItemBase> DefenceItems;
+
 
 
         /// <summary>
@@ -29,6 +37,7 @@ namespace MandatoryAssignment.Creature.Template
         /// </summary>
         public CreatureBase()
         {
+            //DefenceItem = new CreateDefence();
             AttackItems = new List<AttackItemBase>();
             DefenceItems = new List<DefenceItemBase>();
         }
@@ -44,6 +53,7 @@ namespace MandatoryAssignment.Creature.Template
         {
             Id = id;
             Name = name;
+            //HitPoint =  new CheckPositive().Positive(hitPoint);
             HitPoint = hitPoint;
         }
 
@@ -52,47 +62,42 @@ namespace MandatoryAssignment.Creature.Template
         /// </summary>
         /// <param name="opponent">The opponent that the Creature is fighting against</param> 
         public void Fight(CreatureBase opponent)
-            {
+        {
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, $"{Name} is fighting against {opponent.Name}!");
-            //Console.WriteLine($"{Name} is attacking {opponent.Name}!");
+
             opponent.Defend(this);
 
             Attack(opponent);
-            //ReceiveHit(opponent.Hit());
+
             if (!opponent.IsDead())
             {
                 TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is retaliating against {Name}!");
-                //Console.WriteLine($"{opponent.Name} is retaliating against {Name}!");
                 opponent.Attack(this);
             }
+
             // Check if the creature is dead after the turn
             if (IsDead())
             {
-                //Console.WriteLine($"{Name} is dead!");
                 TraceSourceLibrary.LogInformation(1, $"{Name} is dead!");
                 TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is the winner!");
             }
+          
+            if (HitPoint < 20)
+            {
+                TraceSourceLibrary.LogEvent(TraceEventType.Warning, 1, $"{Name} should be careful, it has less than {HitPoint} hit points left!");
+            }
+            //Console.WriteLine($"{Name} has {HitPoint} hit points left!");
+            if (opponent.HitPoint < 20)
+            {
+                TraceSourceLibrary.LogEvent(TraceEventType.Warning, 1, $"{opponent.Name} should be careful, it has less than {opponent.HitPoint} hit points left!");
+            }
             if (opponent.IsDead())
             {
-                //Console.WriteLine($"{opponent.Name} is dead!");
                 TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is dead!");
                 TraceSourceLibrary.LogInformation(1, $"{Name} is the winner!");
-
             }
-            else
-            {
-                if(HitPoint < 20)
-                {
-                    TraceSourceLibrary.LogEvent(TraceEventType.Warning, 1, $"{Name} should be careful, it has less than {HitPoint} hit points left!");
-                }
-                //Console.WriteLine($"{Name} has {HitPoint} hit points left!");
-                if(opponent.HitPoint < 20)
-                {
-                    TraceSourceLibrary.LogEvent(TraceEventType.Warning, 1, $"{opponent.Name} should be careful, it has less than {opponent.HitPoint} hit points left!");
-                    //Console.WriteLine($"{opponent.Name} has {opponent.HitPoint} hit points left!");
-                }
 
-            }
+
         }
 
         #region Abstract methods to be implemented by subclasses
@@ -108,14 +113,33 @@ namespace MandatoryAssignment.Creature.Template
         /// This method is used to calculate the hit points of the Creature
         /// </summary>
         /// <returns>Returns the hit points of the Creature</returns> 
-        public int Hit()
+        public NotNegativNumber Hit()
         {
-            int minHitPoints = 10;
-            int maxHitPoints = 20;
-            int hitPoints = RandomGenerator.Next(minHitPoints, maxHitPoints + 1);
 
-            return hitPoints;
+            int dmg = 0;
+            AttackItems.ForEach(item => dmg += item.Hit);
+            return new NotNegativNumber() { Number = dmg };
+
         }
+        /// <summary>
+        /// This method is used to reduce the hit points of the Creature by defining against the opponent
+        /// </summary>
+        /// <returns></returns>
+        public NotNegativNumber ReduceHitPoint()
+        {
+            int dmg = 0;
+            DefenceItems.ForEach(item => dmg += item.ReduceHitPoint);
+            return new NotNegativNumber() { Number = dmg };
+        }
+        /// <summary>
+        /// This method is used to receive hit points from the opponent from the ReduceHitPoint method
+        /// </summary>
+        /// <param name="damage"></param>
+        public void ReceiveReduceHitPoint(NotNegativNumber damage)
+        {
+            HitPoint -= damage.Number;
+        }
+
         /// <summary>
         /// This method is used to check if the Creature is dead
         /// </summary>
@@ -136,10 +160,11 @@ namespace MandatoryAssignment.Creature.Template
         /// This method is used to receive hit points from the opponent
         /// </summary>
         /// <param name="damage">The damage that the Creature receives</param> 
-        public void ReceiveHit(int damage)
+        public void ReceiveHit(NotNegativNumber damage)
         {
-            HitPoint -= damage;
+            HitPoint -= damage.Number;
         }
+
 
         /// <summary>
         /// This method is used to add AttackItem and DefenceItem to Creature if the Lootable is true
@@ -149,6 +174,8 @@ namespace MandatoryAssignment.Creature.Template
 
         public virtual void Loot(WorldObject worldObject)
         {
+            //Ide to have a list is for future use, if we want to add more than 2 items to the creature
+
             if (worldObject.Lootable)
             {
                 if (AttackItems.Count < 2)

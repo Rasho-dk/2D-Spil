@@ -1,5 +1,5 @@
-﻿using MandatoryAssignment.Interfaces;
-using MandatoryAssignment.Interfaces.Types;
+﻿using MandatoryAssignment.Enumtype;
+using MandatoryAssignment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

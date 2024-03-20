@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MandatoryAssignment.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,15 +16,22 @@ namespace MandatoryAssignment.Configuration
         /// Her we have a singleton of GameConfiguration.
         /// It is important to have a singleton, because we only need one instance of the class, and we can therefore ensure that there is only one instance
         /// </summary>
-        private static GameConfiguration _instance = new GameConfiguration();
+        private static GameConfiguration _instance = new GameConfiguration(); //eager loading
+        //private static GameConfiguration _instance; // used for Lazy loading
 
         /// <summary>
         /// This method is used to get the instance of the class.
+        /// This object reference is used to get the instance of the class.
+        /// This used to call _instance of the class Line 18. 
         /// </summary>
-        public static GameConfiguration Instance
+        public static GameConfiguration Instance //for Lazy loading we can add parameter to the method
         {
             get
             {
+                //if(_instance == null)
+                //{
+                //    _instance = new GameConfiguration(); //Lazy loading
+                //}
                 return _instance;
             }
         }
@@ -31,12 +39,14 @@ namespace MandatoryAssignment.Configuration
 
         /// <summary>
         /// Default constructor
+        /// This should be private, so that it can only be called from within the class.
         /// </summary>
         private GameConfiguration()
         {
             //Her sættes default værdier for spillet
-            MaxX = 100;
-            MaxY = 100;
+            //MaxX = 100;
+            //MaxY = 100;
+            Position = new Position(100, 100);
             WorldName = "DefaultWorld";
             SourceLevels = SourceLevels.All;
             LogFilePath = "TraceGame.xml";
@@ -47,8 +57,10 @@ namespace MandatoryAssignment.Configuration
         //private const string _filePath = "Confiq2D_Spil";
         //private string getPath = Environment.GetEnvironmentVariable(_filePath);
         #region Properties to configure the game
-        public int MaxX { get; set; }
-        public int MaxY { get; set; }
+        //public int MaxX { get; set; }
+        //public int MaxY { get; set; }
+
+        public Position Position { get; set; }
         public string WorldName { get; set; }
         /// <summary>
         /// This property is used to log the XML file for the game if it is true then create Xmlfile .
@@ -85,13 +97,13 @@ namespace MandatoryAssignment.Configuration
 
             if (xmlNode != null)
             {
-                Instance.MaxX = int.Parse(xmlNode.InnerText);
+                Instance.Position.Y = int.Parse(xmlNode.InnerText);
             }
 
             xmlNode = xd.DocumentElement.SelectSingleNode("MaxY");
             if (xmlNode != null)
             {
-                Instance.MaxY = int.Parse(xmlNode.InnerText);
+                Instance.Position.Y = int.Parse(xmlNode.InnerText);
             }
             xmlNode = xd.DocumentElement.SelectSingleNode("WorldName");
             if (xmlNode != null)

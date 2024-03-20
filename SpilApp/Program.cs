@@ -2,10 +2,10 @@
 using MandatoryAssignment.Configuration;
 using MandatoryAssignment.Creature;
 using MandatoryAssignment.Defenses;
+using MandatoryAssignment.Enumtype;
 using MandatoryAssignment.Factories;
 using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Interfaces;
-using MandatoryAssignment.Interfaces.Types;
 using MandatoryAssignment.Weapons;
 using SpilApp;
 using System.Diagnostics;
@@ -27,11 +27,11 @@ class Program
             var test = GameConfiguration.GetConfiguration();
             test.LogXML = true;
             test.LogConsole = true;
-            var world = new World();
-            world.MaxX = test.MaxX;
-            world.MaxY = test.MaxY;
-            world.WorldName = test.WorldName;
 
+            var world = new World(new Position());
+            world.Position.X = test.Position.X;
+            world.Position.X = test.Position.Y;
+            world.WorldName = test.WorldName;
 
 
             IWeapon axe = weaponfactory.Create(WeaponType.Axe);
@@ -53,6 +53,7 @@ class Program
 
             var dragon = new Dragon(1, "Dragon", 100);
             var goblin = new CreateCreature(2, "Goblin", 50);
+            
 
 
             var human = new Creature(3, "Human", 100);
@@ -63,12 +64,13 @@ class Program
             world.AddCreature(goblin);
             world.AddCreature(human);
 
-            //world.AddCreature(human);
 
             dragon.Loot(world.WorldObjectsList()[0]);
             goblin.Loot(world.WorldObjectsList()[1]);
             human.Loot(world.WorldObjectsList()[2]);
 
+
+            //dragon.ReceiveReduceHitPoint(goblin.Hit());
 
             for (int i = 0; i < 5; i++)
             {
@@ -80,43 +82,11 @@ class Program
             }
 
         }
-        catch (FileNotFoundException ex)
+        catch (Exception ex)
         {
-            TraceSourceLibrary.LogEvent(TraceEventType.Error, 1, "Error in Confiqration file path: " + ex.Message);
+            TraceSourceLibrary.LogEvent(TraceEventType.Error, 1, "Error" + ex.Message);
         }
 
-        //goblin.Fight(human);
-        //human.Fight(dragon);
-
-
-
-
-        //TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "World created: " + world.ToString());
-
-
-
-        //print world objects
-
-        //Console.WriteLine(world);
-
-
-        //// Print all information to the console
-        //Console.WriteLine("World Objects:");
-        //foreach (var worldObject in world.WorldObjectsList())
-        //{
-        //    Console.WriteLine($"Name: {worldObject.Name}, Lootable: {worldObject.Lootable}, X: {worldObject.X}, Y: {worldObject.Y}");
-        //    Console.WriteLine($"Attack Item: {worldObject.AttackItem.Name}, Defence Item: {worldObject.DefenceItem.Name}");
-        //    Console.WriteLine();
-        //}
-
-        //Console.WriteLine("\nCreatures:");
-
-
-        //foreach (Creature creature in world.CreaturesList().ToList())
-        //{
-        //    Console.WriteLine(creature);
-
-        //}
 
     }
     

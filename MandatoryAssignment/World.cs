@@ -1,13 +1,15 @@
 ﻿using MandatoryAssignment.Creature.Template;
 using MandatoryAssignment.Gamelogger;
+using MandatoryAssignment.Interfaces;
 using System.Diagnostics;
 
 namespace MandatoryAssignment
 {
     public class World
     {
-        public int MaxX { get; set; }
-        public int MaxY { get; set; }
+        //public int MaxX { get; set; }
+        //public int MaxY { get; set; }
+        public Position Position { get; set; }
         public string WorldName { get; set; }
         private List<CreatureBase> creatures;
         private List<WorldObject> worldObjects;
@@ -22,10 +24,11 @@ namespace MandatoryAssignment
        
         }
 
-        public World(int maxX, int maxY)
+        public World(Position position)
         {
-            MaxX = maxX;
-            MaxY = maxY;
+            //MaxX = maxX;
+            //MaxY = maxY;
+            Position = position;
             creatures = new List<CreatureBase>();
             worldObjects = new List<WorldObject>();
 
@@ -57,11 +60,13 @@ namespace MandatoryAssignment
             string creaturesString = string.Join(", ", creatures);
             string worldObjectsString = string.Join(", ", worldObjects);
 
-            return $"{{{nameof(MaxX)}={MaxX.ToString()}, {nameof(MaxY)}={MaxY.ToString()}, {nameof(WorldName)}={WorldName}," +
+            //return $"{{{nameof(MaxX)}={MaxX.ToString()}, {nameof(MaxY)}={MaxY.ToString()}, {nameof(WorldName)}={WorldName}," +
+            //    $" Creatures={creaturesString}, WorldObjects={worldObjectsString}}}";
+
+            return $"{{{nameof(Position.X)}={Position.X.ToString()}, {nameof(Position.Y)}={Position.Y.ToString()}, {nameof(WorldName)}={WorldName}," +
                 $" Creatures={creaturesString}, WorldObjects={worldObjectsString}}}";
 
 
-            //return $"{{{nameof(MaxX)}={MaxX.ToString()}, {nameof(MaxY)}={MaxY.ToString()}, {nameof(WorldName)}={WorldName}, {nameof(Creature)}={Creature}, {nameof(WorldObject)}={WorldObject}}}";
         }
     }
 
