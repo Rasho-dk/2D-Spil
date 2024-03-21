@@ -11,7 +11,7 @@ namespace SpilApp
 {
     public class Creature : CreateCreature
     {
-        public Creature(int id, string name, int hitPoint) : base(id, name, hitPoint)
+        public Creature(string name, int hitPoint) : base(name, hitPoint)
         {
         }
     }

@@ -1,6 +1,7 @@
 ﻿using MandatoryAssignment;
 using MandatoryAssignment.Configuration;
 using MandatoryAssignment.Creature;
+using MandatoryAssignment.Creature.Template;
 using MandatoryAssignment.Defenses;
 using MandatoryAssignment.Enumtype;
 using MandatoryAssignment.Factories;
@@ -14,10 +15,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        
 
         WeaponTest(new WeaponFactory(), new DefenceFactory()); 
-
     }
 
     public static void WeaponTest(IWeaponFactory weaponfactory, IDefenceFactory defenceFactory)
@@ -28,11 +27,12 @@ class Program
             test.LogXML = true;
             test.LogConsole = true;
 
-            var world = new World(new Position());
+            var world = new MyWorld();
             world.Position.X = test.Position.X;
             world.Position.X = test.Position.Y;
             world.WorldName = test.WorldName;
 
+          
 
             IWeapon axe = weaponfactory.Create(WeaponType.Axe);
             IWeapon sowrd = weaponfactory.Create(WeaponType.Sword);
@@ -46,17 +46,17 @@ class Program
             IDefence armor = defenceFactory.Create(DefenceType.Armor);
 
             ////conforming the the axe is an obj of type AttackItem not IWeapon
-            world.AddWorldObject(new WorldObject("Treasure Chest", true, false, 50, 30, (AttackItemBase)axe, (DefenceItemBase)shield));
-            world.AddWorldObject(new WorldObject("Bonus Box", true, false, 50, 30, (AttackItemBase)sowrd, (DefenceItemBase)helmet));
-            world.AddWorldObject(new WorldObject("Bonus Box", true, false, 60, 40, (AttackItemBase)bow, (DefenceItemBase)armor));
+            world.AddWorldObject(new MyWorldObj("Treasure Chest", true, false, new Position(50, 20) , (AttackItemBase)axe, (DefenceItemBase)shield));
+            world.AddWorldObject(new MyWorldObj("Bonus Box", true, false, new Position(50, 20), (AttackItemBase)sowrd, (DefenceItemBase)helmet));
+            world.AddWorldObject(new MyWorldObj("Bonus Box", true, false, new Position(60, 20), (AttackItemBase)bow, (DefenceItemBase)armor));
 
 
-            var dragon = new Dragon(1, "Dragon", 100);
-            var goblin = new CreateCreature(2, "Goblin", 50);
+            var dragon = new Dragon("Dragon", 100);
+            var goblin = new CreateCreature("Goblin", 50);
             
 
 
-            var human = new Creature(3, "Human", 100);
+            var human = new Creature("Human", 100);
 
 
 
@@ -86,6 +86,9 @@ class Program
         {
             TraceSourceLibrary.LogEvent(TraceEventType.Error, 1, "Error" + ex.Message);
         }
+
+
+
 
 
     }

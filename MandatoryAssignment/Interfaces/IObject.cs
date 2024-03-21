@@ -8,6 +8,6 @@ namespace MandatoryAssignment.Interfaces
 {
     public interface IObject
     {
-        int Id { get; set; }
+        string Id { get;  }
     }
 }

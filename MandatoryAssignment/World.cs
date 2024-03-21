@@ -5,56 +5,114 @@ using System.Diagnostics;
 
 namespace MandatoryAssignment
 {
-    public class World
+    public abstract class World : IObject
     {
+
+        #region Properties
+        public string Id { get ; private set ; }
+
+
+
         //public int MaxX { get; set; }
         //public int MaxY { get; set; }
+
+        /// <summary>
+        /// Represents the position of the world
+        /// </summary>
         public Position Position { get; set; }
+        /// <summary>
+        /// Represents the name of the world
+        /// </summary>
         public string WorldName { get; set; }
+
+        /// <summary>
+        /// Represents a list of creatures in the world
+        /// </summary>
         private List<CreatureBase> creatures;
+        /// <summary>
+        /// Represents a list of world objects in the world
+        /// </summary>
         private List<WorldObject> worldObjects;
-        public CreatureBase Creature { get; set; }
-        public WorldObject WorldObject { get; set; }
-        //public TraceEventType EventType { get; set; }
 
-        public World()
-        {
-            creatures = new List<CreatureBase>();
-            worldObjects = new List<WorldObject>();
-       
-        }
+        //public CreatureBase Creature { get; set; }
+        //public WorldObject WorldObject { get; set; }
 
-        public World(Position position)
+        #endregion Properties
+
+
+        /// <summary>
+        /// This is the constructor for the World class that use position takes in the  x and y coordinates of the world and the world name
+        /// This constructor also initializes the creatures and worldObjects list to empty lists allow for adding creatures and world objects to the world
+        /// </summary>
+        protected World()
         {
             //MaxX = maxX;
             //MaxY = maxY;
-            Position = position;
+            Id = Guid.NewGuid().ToString().Substring(0, 8); ;
+            Position = new Position();
             creatures = new List<CreatureBase>();
             worldObjects = new List<WorldObject>();
+            TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "World created: " + this.ToString());
 
         }
 
+        /// <summary>
+        /// This is the constructor for the World class that takes in the position of the world, the world name, a list of creatures and a list of world objects
+        /// </summary>
+        /// <param name="position">Position of the world</param> 
+        /// <param name="worldName">Name of the world</param>
+        /// <param name="creatures">List of creatures</param>
+        /// <param name="worldObjects">List of world objects</param>
+        protected World(Position position, string worldName)
+        {
+            Id = Guid.NewGuid().ToString().Substring(0, 8); ;
+            Position = position;
+            WorldName = worldName;
+            creatures = new List<CreatureBase>();
+            worldObjects = new List<WorldObject>();
+
+            TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "World created: " + this.ToString());
+        }
+
+
+        /// <summary>
+        /// This method adds a creature to the world
+        /// </summary>
+        /// <param name="creature">The creature to be added to the world</param>
         public void AddCreature(CreatureBase creature)
         {
             creatures.Add(creature);
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature added to world: " + creature.ToString());
             
         }
-
+        /// <summary>
+        /// This method adds a world object to the world
+        /// </summary>
+        /// <param name="worldObject">The world object to be added to the world</param>
         public void AddWorldObject(WorldObject worldObject)
         {
             worldObjects.Add(worldObject);
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "WorldObject added to world: " + worldObject);
-
-
         }
 
+        /// <summary>
+        /// This method returns a list of all the creatures in the world
+        /// </summary>
+        /// <returns>List of creatures in the world</returns>
         public List<WorldObject> WorldObjectsList()
         {
             return worldObjects;
         }
+        /// <summary>
+        /// This method returns a list of all the world objects in the world
+        /// </summary>
+        /// <returns>List of world objects in the world</returns>
         public IEnumerable<CreatureBase> CreaturesList() { return creatures; }
 
+        /// <summary>
+        /// This method returns a string representation of the world
+        /// </summary>
+        /// <returns>Returns a string representation of the world</returns>
         public override string ToString()
         {
             string creaturesString = string.Join(", ", creatures);
@@ -63,7 +121,7 @@ namespace MandatoryAssignment
             //return $"{{{nameof(MaxX)}={MaxX.ToString()}, {nameof(MaxY)}={MaxY.ToString()}, {nameof(WorldName)}={WorldName}," +
             //    $" Creatures={creaturesString}, WorldObjects={worldObjectsString}}}";
 
-            return $"{{{nameof(Position.X)}={Position.X.ToString()}, {nameof(Position.Y)}={Position.Y.ToString()}, {nameof(WorldName)}={WorldName}," +
+            return $"{{{nameof(Id)}={Id.ToString()} ,{nameof(Position.X)}={Position.X.ToString()}, {nameof(Position.Y)}={Position.Y.ToString()}, {nameof(WorldName)}={WorldName}," +
                 $" Creatures={creaturesString}, WorldObjects={worldObjectsString}}}";
 
 

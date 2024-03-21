@@ -10,7 +10,7 @@ namespace MandatoryAssignment.Creature.Template
 {
     public abstract class CreatureBase : IObject
     {
-        public int Id { get; set; }
+        public string Id { get; private set; }
         protected string Name { get; set; }
 
         //protected int HitPoint { get; set; }
@@ -38,6 +38,7 @@ namespace MandatoryAssignment.Creature.Template
         public CreatureBase()
         {
             //DefenceItem = new CreateDefence();
+            Id = Guid.NewGuid().ToString().Substring(0, 8);
             AttackItems = new List<AttackItemBase>();
             DefenceItems = new List<DefenceItemBase>();
         }
@@ -49,9 +50,9 @@ namespace MandatoryAssignment.Creature.Template
         /// <param name="id">Unique id for Creature</param>
         /// <param name="name">Name of Creature</param>
         /// <param name="hitPoint">How many points does the Creature have</param>
-        protected CreatureBase(int id, string name, int hitPoint) : this()
+        protected CreatureBase( string name, int hitPoint) : this()
         {
-            Id = id;
+            Id = Guid.NewGuid().ToString().Substring(0, 8); ;
             Name = name;
             //HitPoint =  new CheckPositive().Positive(hitPoint);
             HitPoint = hitPoint;
@@ -216,5 +217,7 @@ namespace MandatoryAssignment.Creature.Template
 
             return $"Id: {Id}, Name: {Name}, HitPoint: {HitPoint}, AttackItems: {attackItemsString}, DefenceItems: {defenceItemsString}";
         }
+
+
     }
 }
