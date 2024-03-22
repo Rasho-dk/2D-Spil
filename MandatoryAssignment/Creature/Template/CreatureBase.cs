@@ -3,19 +3,35 @@ using MandatoryAssignment.Defenses;
 using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Interfaces;
 using MandatoryAssignment.Liskov;
+using MandatoryAssignment.Observer;
 using MandatoryAssignment.Weapons;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace MandatoryAssignment.Creature.Template
 {
-    public abstract class CreatureBase : IObject
+    public abstract class CreatureBase : ObservableObject
     {
         public string Id { get; private set; }
-        protected string Name { get; set; }
+        public string Name { get; set; }
 
-        //protected int HitPoint { get; set; }
-        protected int HitPoint { get; set; }
-       
+        //public int HitPoint { get; set; }
+        private int hitPoint;
+
+        public int HitPoint
+        {
+            get { return hitPoint; }
+            set
+            {
+                if (hitPoint != value)
+                {
+                    hitPoint = value;
+                    Notify();
+                }
+            }
+        }
+
 
         /// <summary>
         /// This property is used to generate random numbers using the Random class and Guid class to get a unique seed
@@ -30,6 +46,12 @@ namespace MandatoryAssignment.Creature.Template
         private List<AttackItemBase> AttackItems;
         private List<DefenceItemBase> DefenceItems;
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void Notify([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
 
         /// <summary>
