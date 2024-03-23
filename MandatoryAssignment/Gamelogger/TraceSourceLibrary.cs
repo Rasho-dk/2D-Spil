@@ -14,6 +14,7 @@ namespace MandatoryAssignment.Gamelogger
         /// </summary>
         private static readonly object _lock = new object();
 
+
         //private GameConfiguration GameConfiguration { get; set; }
 
         /// <summary>
@@ -98,6 +99,7 @@ namespace MandatoryAssignment.Gamelogger
                 traceSource.Listeners.Add(new XmlWriterTraceListener(new StreamWriter(path) { AutoFlush = true }));
             }
         }
+
         /// <summary>
         /// This method is used to different log events in the game.
         /// </summary> 

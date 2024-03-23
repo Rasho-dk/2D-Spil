@@ -97,7 +97,7 @@ namespace MandatoryAssignment.Configuration
 
             if (xmlNode != null)
             {
-                Instance.Position.Y = int.Parse(xmlNode.InnerText);
+                Instance.Position.X = int.Parse(xmlNode.InnerText);
             }
 
             xmlNode = xd.DocumentElement.SelectSingleNode("MaxY");

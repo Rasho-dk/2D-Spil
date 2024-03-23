@@ -1,18 +1,18 @@
-﻿using MandatoryAssignment.Defences;
-using MandatoryAssignment.Defenses;
+﻿using MandatoryAssignment.Defenses;
 using MandatoryAssignment.Gamelogger;
-using MandatoryAssignment.Interfaces;
 using MandatoryAssignment.Liskov;
 using MandatoryAssignment.Observer;
 using MandatoryAssignment.Weapons;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace MandatoryAssignment.Creature.Template
 {
-    public abstract class CreatureBase : ObservableObject
+    public abstract class CreatureBase : ISubject
     {
+        //List of observers
+        private List<IObserver> observers = new List<IObserver>();
+
+
         public string Id { get; private set; }
         public string Name { get; set; }
 
@@ -24,11 +24,13 @@ namespace MandatoryAssignment.Creature.Template
             get { return hitPoint; }
             set
             {
-                if (hitPoint != value)
+                hitPoint = value;
+                if (IsDead())
                 {
-                    hitPoint = value;
                     Notify();
+
                 }
+
             }
         }
 
@@ -46,12 +48,7 @@ namespace MandatoryAssignment.Creature.Template
         private List<AttackItemBase> AttackItems;
         private List<DefenceItemBase> DefenceItems;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void Notify([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
 
         /// <summary>
@@ -72,11 +69,10 @@ namespace MandatoryAssignment.Creature.Template
         /// <param name="id">Unique id for Creature</param>
         /// <param name="name">Name of Creature</param>
         /// <param name="hitPoint">How many points does the Creature have</param>
-        protected CreatureBase( string name, int hitPoint) : this()
+        protected CreatureBase(string name, int hitPoint) : this()
         {
             Id = Guid.NewGuid().ToString().Substring(0, 8); ;
             Name = name;
-            //HitPoint =  new CheckPositive().Positive(hitPoint);
             HitPoint = hitPoint;
         }
 
@@ -104,7 +100,7 @@ namespace MandatoryAssignment.Creature.Template
                 TraceSourceLibrary.LogInformation(1, $"{Name} is dead!");
                 TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is the winner!");
             }
-          
+
             if (HitPoint < 20)
             {
                 TraceSourceLibrary.LogEvent(TraceEventType.Warning, 1, $"{Name} should be careful, it has less than {HitPoint} hit points left!");
@@ -241,5 +237,38 @@ namespace MandatoryAssignment.Creature.Template
         }
 
 
+        public void Attach(IObserver observer)
+        {
+            observers.Add(observer);
+
+        }
+
+        public void Notify()
+        {
+            observers.ForEach(x => x.Update(this));
+        }
+
+        public void Detach(IObserver observer)
+        {
+            observers.Remove(observer);
+        }
+
+        //public void Update(ISubject subject)
+        //{
+        //    if (subject is CreatureBase)
+        //    {
+        //        CreatureBase creature = (CreatureBase)subject;
+        //        TraceSourceLibrary.LogInformation(1, $"{creature.Name} has been notified that {creature.Name} has {creature.HitPoint} hit points left!");
+
+        //        if (IsDead())
+        //        {
+        //            // Remove the creature from the list
+        //            if (observers.Contains(creature))
+        //            {
+        //                observers.Remove(creature);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

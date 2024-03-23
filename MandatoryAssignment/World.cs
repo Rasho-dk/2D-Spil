@@ -1,15 +1,17 @@
 ﻿using MandatoryAssignment.Creature.Template;
 using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Interfaces;
+using MandatoryAssignment.Observer;
 using System.Diagnostics;
 
 namespace MandatoryAssignment
 {
-    public abstract class World : IObject
+    public abstract class World : IObject, IObserver
     {
 
+
         #region Properties
-        public string Id { get ; private set ; }
+        public string Id { get; private set; }
 
 
 
@@ -52,6 +54,7 @@ namespace MandatoryAssignment
             Position = new Position();
             creatures = new List<CreatureBase>();
             worldObjects = new List<WorldObject>();
+
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "World created: " + this.ToString());
 
         }
@@ -83,7 +86,9 @@ namespace MandatoryAssignment
         {
             creatures.Add(creature);
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature added to world: " + creature.ToString());
-            
+
+            // Attach the world to the creature
+            creature.Attach((IObserver)this);
         }
         /// <summary>
         /// This method adds a world object to the world
@@ -126,6 +131,34 @@ namespace MandatoryAssignment
 
 
         }
+
+        public void Update(ISubject subject)
+        {
+            if (subject is CreatureBase)
+            {
+                CreatureBase creature = (CreatureBase)subject;
+                if (creature.IsDead())
+                {
+                    var cur = CreaturesList().FirstOrDefault(c => c.Id.Equals(creature.Id));
+                    creatures.Remove(creature);
+                    this.creatures.ForEach(creatures => creatures.Detach((IObserver)cur));
+
+                    creature.Detach(this);
+
+
+
+
+
+                    //this.creatures.ForEach(c => c.Detach((IObserver)this.creatures.ForEach(c => c.Id.Equals(creature.Id)));)
+                    //creature.Detach((IObserver)this.creatures.ForEach(c => c.Id.Equals(creature.Id)));
+                    TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature removed from world: " + creature.ToString());
+                }
+            }
+          
+
+        }
+
+    
     }
 
 }

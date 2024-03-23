@@ -51,7 +51,7 @@ class Program
 
 
             var dragon = new Dragon("Dragon", 100);
-            var goblin = new CreateCreature("Goblin", 50);
+            var goblin = new CreateCreature("Goblin", 100);
 
 
 
@@ -77,20 +77,6 @@ class Program
             {
                 dragon.Fight(goblin);
 
-                goblin.PropertyChanged += (obj, args) =>
-                {
-                    Console.WriteLine($"This is a lambda method : the changed property is {args.PropertyName}");
-                    Console.WriteLine($"New values is : {obj}");
-                };
-
-                Console.WriteLine("Named method added");
-                goblin.PropertyChanged += Update;
-                goblin.HitPoint = goblin.HitPoint;
-
-
-
-
-
                 if (goblin.IsDead())
                 {
                     break;
@@ -105,10 +91,6 @@ class Program
 
 
     }
-    protected static void Update(object obj, PropertyChangedEventArgs args)
-    {
-        Console.WriteLine($"This is a named method : the changed property is {args.PropertyName}");
-        Console.WriteLine($"New values is \n{obj}");
-    }
+ 
 
 }

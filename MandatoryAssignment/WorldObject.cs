@@ -1,11 +1,17 @@
-﻿using MandatoryAssignment.Defenses;
+﻿using MandatoryAssignment.Creature.Template;
+using MandatoryAssignment.Defenses;
+using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Interfaces;
+using MandatoryAssignment.Observer;
 using MandatoryAssignment.Weapons;
+using System;
 
 namespace MandatoryAssignment
 {
     public abstract class WorldObject : IObject
     {
+  
+
         public string Id { get; set; }
         public string Name { get; set; }
         public bool Lootable { get; set; }
@@ -25,6 +31,7 @@ namespace MandatoryAssignment
         protected WorldObject()
         {
             Id = Guid.NewGuid().ToString().Substring(0, 8);
+
 
         }
 
@@ -52,5 +59,7 @@ namespace MandatoryAssignment
         {
             return $"{{{nameof(Id)}={Id}, {nameof(Name)}={Name}, {nameof(Lootable)}={Lootable.ToString()}, {nameof(Removeable)}={Removeable.ToString()}, {nameof(Position)}={Position}, {nameof(AttackItem)}={AttackItem}, {nameof(DefenceItem)}={DefenceItem}}}";
         }
+        
+
     }
 }
