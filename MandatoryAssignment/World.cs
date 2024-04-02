@@ -6,14 +6,10 @@ using System.Diagnostics;
 
 namespace MandatoryAssignment
 {
-    public abstract class World : IObject, IObserver
+    public abstract class World : IObserver
     {
-
-
         #region Properties
         public string Id { get; private set; }
-
-
 
         //public int MaxX { get; set; }
         //public int MaxY { get; set; }
@@ -87,7 +83,6 @@ namespace MandatoryAssignment
             creatures.Add(creature);
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature added to world: " + creature.ToString());
 
-            // Attach the world to the creature
             creature.Attach((IObserver)this);
         }
         /// <summary>
@@ -131,34 +126,39 @@ namespace MandatoryAssignment
 
 
         }
-
-        public void Update(ISubject subject)
+        /// <summary>
+        /// This method is used to update the creature list when a creature is dead
+        /// </summary>
+        /// <param name="sender">The creature that is dead</param> 
+        /// <param name="e">The event arguments</param>
+        public void Update(object sender, ChangeEventArgs e)
         {
-            if (subject is CreatureBase)
+            if (sender is CreatureBase)
             {
-                CreatureBase creature = (CreatureBase)subject;
+                CreatureBase creature = (CreatureBase)sender;
                 if (creature.IsDead())
                 {
-                    var cur = CreaturesList().FirstOrDefault(c => c.Id.Equals(creature.Id));
                     creatures.Remove(creature);
-                    this.creatures.ForEach(creatures => creatures.Detach((IObserver)cur));
-
-                    creature.Detach(this);
-
-
-
-
-
-                    //this.creatures.ForEach(c => c.Detach((IObserver)this.creatures.ForEach(c => c.Id.Equals(creature.Id)));)
-                    //creature.Detach((IObserver)this.creatures.ForEach(c => c.Id.Equals(creature.Id)));
+                    // Detach the creature from the observer
+                    //using reflection to call the Detach method
+                    sender.GetType().GetMethod("Detach")?.Invoke(creature, new object[] { (IObserver)this });
                     TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature removed from world: " + creature.ToString());
                 }
             }
-          
-
+        }
+        public void GroupByType()
+        {
+            var groupedCreatures = creatures.GroupBy(c => c.GetType().Name);
+            foreach (var group in groupedCreatures)
+            {
+                TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Grouped by type: " + group.Key);
+                foreach (var creature in group)
+                {
+                    TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, creature.ToString());
+                }
+            }
         }
 
-    
     }
 
 }

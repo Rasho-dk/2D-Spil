@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MandatoryAssignment.Observer
 {
-    public interface IObserver
+    public class ChangeEventArgs : EventArgs
     {
-        void Update(object sender, ChangeEventArgs e);
-
+        public int HitPoint { get; set; }
     }
 }

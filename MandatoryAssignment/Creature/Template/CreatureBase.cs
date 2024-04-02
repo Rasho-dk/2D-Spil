@@ -9,9 +9,11 @@ namespace MandatoryAssignment.Creature.Template
 {
     public abstract class CreatureBase : ISubject
     {
-        //List of observers
-        private List<IObserver> observers = new List<IObserver>();
+     
+        //event
+        public event EventHandler<ChangeEventArgs> HitPointChanged = null!;
 
+     
 
         public string Id { get; private set; }
         public string Name { get; set; }
@@ -27,8 +29,8 @@ namespace MandatoryAssignment.Creature.Template
                 hitPoint = value;
                 if (IsDead())
                 {
-                    Notify();
-
+                    //Notify observers
+                    OnChange(new ChangeEventArgs() { HitPoint = hitPoint });
                 }
 
             }
@@ -237,38 +239,26 @@ namespace MandatoryAssignment.Creature.Template
         }
 
 
-        public void Attach(IObserver observer)
+        /// <summary>
+        /// This method is used to attach an observer to the Creature
+        /// </summary>
+        /// <param name="observer">observer to be attached</param>
+        public void Attach(IObserver observer) => HitPointChanged += observer.Update;
+
+
+        /// <summary>
+        /// This method is used to detach an observer from the Creature
+        /// </summary>
+        /// <param name="observer"></param>
+        public void Detach(IObserver observer) => HitPointChanged -= observer.Update;
+
+        /// <summary>
+        /// This method is used to notify the observers and update the hit points
+        /// </summary>
+        /// <param name="e">event arguments</param> 
+        public virtual void OnChange(ChangeEventArgs e)
         {
-            observers.Add(observer);
-
+            HitPointChanged?.Invoke(this, e);
         }
-
-        public void Notify()
-        {
-            observers.ForEach(x => x.Update(this));
-        }
-
-        public void Detach(IObserver observer)
-        {
-            observers.Remove(observer);
-        }
-
-        //public void Update(ISubject subject)
-        //{
-        //    if (subject is CreatureBase)
-        //    {
-        //        CreatureBase creature = (CreatureBase)subject;
-        //        TraceSourceLibrary.LogInformation(1, $"{creature.Name} has been notified that {creature.Name} has {creature.HitPoint} hit points left!");
-
-        //        if (IsDead())
-        //        {
-        //            // Remove the creature from the list
-        //            if (observers.Contains(creature))
-        //            {
-        //                observers.Remove(creature);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

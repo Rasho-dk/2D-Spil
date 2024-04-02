@@ -16,7 +16,7 @@ namespace MandatoryAssignment.Factories
         /// <param name="type">The type of weapon to create</param>
         /// <returns>returns the weapon created based on the type</returns>//
         /// <exception cref="ArgumentException">throw exception if the type is not valid</exception>  
-        public IWeapon Create(WeaponType type)
+        public static IWeapon Create(WeaponType type)
         {
             switch (type)
             {
@@ -37,7 +37,7 @@ namespace MandatoryAssignment.Factories
         /// <param name="hit">hit points of the weapon</param>
         /// <param name="range">range of the weapon</param>
         /// <returns>returns the weapon created based on the name, hit and range</returns> 
-        public IWeapon Create(string name, int hit, int range)
+        public static IWeapon Create(string name, int hit, int range)
         {
             return new Weapons.CreateWeapon(name, hit, range);
       

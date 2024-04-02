@@ -52,15 +52,9 @@ namespace MandatoryAssignment.Gamelogger
             {
                 ReloadError();
             }
-
-            //traceSource = new TraceSource(GameConfiguration.Instance.WorldName,SourceLevels.All);
-            //traceSource.Switch = new SourceSwitch(GameConfiguration.Instance.WorldName, SourceLevels.All.ToString());
-
             if (GameConfiguration.Instance.LogXML)
             {
-                Reload();
-                //traceSource.Listeners.Add(new XmlWriterTraceListener(GameConfiguration.Instance.WorldName + "Game.xml"));
-                
+                Reload();                
             }
             if(GameConfiguration.Instance.LogConsole)
             {
@@ -86,7 +80,6 @@ namespace MandatoryAssignment.Gamelogger
         /// </summary>
         private void Reload()
         {
-            //traceSource.Close();
             traceSource = new TraceSource(GameConfiguration.Instance.WorldName, SourceLevels.All);
 
             traceSource.Switch = new SourceSwitch(GameConfiguration.Instance.WorldName + "switch", SourceLevels.All.ToString());

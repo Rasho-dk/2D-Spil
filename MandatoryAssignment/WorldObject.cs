@@ -59,6 +59,7 @@ namespace MandatoryAssignment
         {
             return $"{{{nameof(Id)}={Id}, {nameof(Name)}={Name}, {nameof(Lootable)}={Lootable.ToString()}, {nameof(Removeable)}={Removeable.ToString()}, {nameof(Position)}={Position}, {nameof(AttackItem)}={AttackItem}, {nameof(DefenceItem)}={DefenceItem}}}";
         }
+
         
 
     }

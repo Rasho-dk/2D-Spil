@@ -12,6 +12,6 @@ namespace MandatoryAssignment.Observer
     {
         void Attach(IObserver observer);
         void Detach(IObserver observer);
-        void Notify();
+        void OnChange(ChangeEventArgs e);
     }
 }

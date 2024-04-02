@@ -9,7 +9,7 @@ namespace MandatoryAssignment.Interfaces
 {
     public interface IDefenceFactory  
     {
-        IDefence Create(DefenceType type);
-        IDefence Create(string name, int reduceHitPoint, bool foundInChest);
+        static abstract IDefence Create(DefenceType type);
+        static abstract IDefence Create(string name, int reduceHitPoint, bool foundInChest);
     }
 }

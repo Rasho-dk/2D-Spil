@@ -13,6 +13,8 @@ namespace SpilApp
     {
         public Creature(string name, int hitPoint) : base(name, hitPoint)
         {
+
         }
+      
     }
 }

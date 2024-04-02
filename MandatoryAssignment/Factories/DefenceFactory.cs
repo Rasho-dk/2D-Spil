@@ -16,7 +16,7 @@ namespace MandatoryAssignment.Factories
         /// <param name="type">The type of defence</param> 
         /// <returns> returns the defence item created based on the type</returns> 
         /// <exception cref="ArgumentException">If the type is not valid</exception> 
-        public IDefence Create(DefenceType type)
+        public static IDefence Create(DefenceType type)
         {
             switch (type)
             {
@@ -38,7 +38,7 @@ namespace MandatoryAssignment.Factories
         /// <param name="reduceHitPoint">The amount of hit points the defence item can reduce</param>
         /// <param name="foundInChest">If the defence item is found in a chest</param>
         /// <returns></returns>
-        public IDefence Create(string name, int reduceHitPoint, bool foundInChest)
+        public static IDefence Create(string name, int reduceHitPoint, bool foundInChest)
         {
             return new Defences.CreateDefence(name, reduceHitPoint, foundInChest);      
         }

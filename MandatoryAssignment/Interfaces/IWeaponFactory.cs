@@ -12,7 +12,7 @@ namespace MandatoryAssignment.Interfaces
      *         */
     public interface IWeaponFactory 
     {
-        IWeapon Create(WeaponType type);
-        IWeapon Create(string name, int hit, int range);
+        static abstract IWeapon Create(WeaponType type);
+        static abstract IWeapon Create(string name, int hit, int range);
     }
 }
