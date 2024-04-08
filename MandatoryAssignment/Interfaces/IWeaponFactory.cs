@@ -8,7 +8,7 @@ using MandatoryAssignment.Enumtype;
 namespace MandatoryAssignment.Interfaces
 {
     /*This interface is used to create a weapon of a specific type
-     *     * Let the user choose between Axe, Sword, Bow and there own CreateWeapon
+     *  Let the user choose between Axe, Sword, Bow and there own CreateWeapon
      *         */
     public interface IWeaponFactory 
     {

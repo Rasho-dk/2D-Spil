@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MandatoryAssignment.Liskov
+namespace MandatoryAssignment.Interfaces
 {
-    public interface IT
+    public interface IPosition
     {
-        int Positive(int a);
+        int X { get; set; }
+        int Y { get; set; }
     }
 }

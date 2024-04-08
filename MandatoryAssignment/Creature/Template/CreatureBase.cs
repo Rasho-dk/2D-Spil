@@ -1,5 +1,6 @@
 ﻿using MandatoryAssignment.Defenses;
 using MandatoryAssignment.Gamelogger;
+using MandatoryAssignment.Interfaces;
 using MandatoryAssignment.Liskov;
 using MandatoryAssignment.Observer;
 using MandatoryAssignment.Weapons;
@@ -7,13 +8,16 @@ using System.Diagnostics;
 
 namespace MandatoryAssignment.Creature.Template
 {
+    /// <summary>
+    /// This class is abstract and is used as a template for the Creature class.
+    /// Benefit of using abstract class is that it can have abstract methods and properties that can be implemented by the subclasses
+    /// </summary>
+
     public abstract class CreatureBase : ISubject
     {
      
         //event
         public event EventHandler<ChangeEventArgs> HitPointChanged = null!;
-
-     
 
         public string Id { get; private set; }
         public string Name { get; set; }
@@ -36,7 +40,7 @@ namespace MandatoryAssignment.Creature.Template
             }
         }
 
-
+        #region Delete me
         /// <summary>
         /// This property is used to generate random numbers using the Random class and Guid class to get a unique seed
         /// </summary>
@@ -45,7 +49,7 @@ namespace MandatoryAssignment.Creature.Template
         //protected AttackItemBase AttackItem { get; set; }
         //protected DefenceItemBase DefenceItem { get; set; }
         //protected AttackItemBase AttackItemBase { get; set; }
-
+        #endregion End Delete
 
         private List<AttackItemBase> AttackItems;
         private List<DefenceItemBase> DefenceItems;
@@ -82,7 +86,7 @@ namespace MandatoryAssignment.Creature.Template
         /// This method is used to fight against the opponent
         /// </summary>
         /// <param name="opponent">The opponent that the Creature is fighting against</param> 
-        public void Fight(CreatureBase opponent)
+        public string Fight(CreatureBase opponent)
         {
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, $"{Name} is fighting against {opponent.Name}!");
 
@@ -101,6 +105,8 @@ namespace MandatoryAssignment.Creature.Template
             {
                 TraceSourceLibrary.LogInformation(1, $"{Name} is dead!");
                 TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is the winner!");
+                return $"{opponent.Id}";
+
             }
 
             if (HitPoint < 20)
@@ -116,10 +122,12 @@ namespace MandatoryAssignment.Creature.Template
             {
                 TraceSourceLibrary.LogInformation(1, $"{opponent.Name} is dead!");
                 TraceSourceLibrary.LogInformation(1, $"{Name} is the winner!");
+                return $"{Id}";
             }
 
-
+            return "No winner yet!";
         }
+
 
         #region Abstract methods to be implemented by subclasses
         // Method for attacking opponent
@@ -127,36 +135,35 @@ namespace MandatoryAssignment.Creature.Template
 
         // Method for defending against opponent
         protected abstract void Defend(CreatureBase opponent);
-
         #endregion
 
         /// <summary>
         /// This method is used to calculate the hit points of the Creature
         /// </summary>
         /// <returns>Returns the hit points of the Creature</returns> 
-        public NotNegativNumber Hit()
+        public PositiveNo Hit()
         {
 
             int dmg = 0;
             AttackItems.ForEach(item => dmg += item.Hit);
-            return new NotNegativNumber() { Number = dmg };
+            return new PositiveNo() { Number = dmg };
 
         }
         /// <summary>
         /// This method is used to reduce the hit points of the Creature by defining against the opponent
         /// </summary>
         /// <returns></returns>
-        public NotNegativNumber ReduceHitPoint()
+        public PositiveNo ReduceHitPoint()
         {
             int dmg = 0;
             DefenceItems.ForEach(item => dmg += item.ReduceHitPoint);
-            return new NotNegativNumber() { Number = dmg };
+            return new PositiveNo() { Number = dmg };
         }
         /// <summary>
         /// This method is used to receive hit points from the opponent from the ReduceHitPoint method
         /// </summary>
         /// <param name="damage"></param>
-        public void ReceiveReduceHitPoint(NotNegativNumber damage)
+        public void ReceiveReduceHitPoint(PositiveNo damage)
         {
             HitPoint -= damage.Number;
         }
@@ -181,7 +188,7 @@ namespace MandatoryAssignment.Creature.Template
         /// This method is used to receive hit points from the opponent
         /// </summary>
         /// <param name="damage">The damage that the Creature receives</param> 
-        public void ReceiveHit(NotNegativNumber damage)
+        public void ReceiveHit(PositiveNo damage)
         {
             HitPoint -= damage.Number;
         }
@@ -201,11 +208,11 @@ namespace MandatoryAssignment.Creature.Template
             {
                 if (AttackItems.Count < 2)
                 {
-                    AttackItems.Add(worldObject.AttackItem);
+                    AttackItems.Add((AttackItemBase)worldObject.AttackItem);
                 }
                 if (DefenceItems.Count < 2)
                 {
-                    DefenceItems.Add(worldObject.DefenceItem);
+                    DefenceItems.Add((DefenceItemBase)worldObject.DefenceItem);
                 }
                 if (AttackItems.Count == 2)
                 {

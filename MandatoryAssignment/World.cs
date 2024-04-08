@@ -1,6 +1,7 @@
 ﻿using MandatoryAssignment.Creature.Template;
 using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Interfaces;
+using MandatoryAssignment.Models;
 using MandatoryAssignment.Observer;
 using System.Diagnostics;
 
@@ -17,7 +18,8 @@ namespace MandatoryAssignment
         /// <summary>
         /// Represents the position of the world
         /// </summary>
-        public Position Position { get; set; }
+        //public Position Position { get; set; }
+        public IPosition Position { get; set; }
         /// <summary>
         /// Represents the name of the world
         /// </summary>
@@ -62,7 +64,7 @@ namespace MandatoryAssignment
         /// <param name="worldName">Name of the world</param>
         /// <param name="creatures">List of creatures</param>
         /// <param name="worldObjects">List of world objects</param>
-        protected World(Position position, string worldName)
+        protected World(IPosition position, string worldName)
         {
             Id = Guid.NewGuid().ToString().Substring(0, 8); ;
             Position = position;
@@ -83,7 +85,7 @@ namespace MandatoryAssignment
             creatures.Add(creature);
             TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature added to world: " + creature.ToString());
 
-            creature.Attach((IObserver)this);
+            creature.Attach(this);
         }
         /// <summary>
         /// This method adds a world object to the world
@@ -146,18 +148,7 @@ namespace MandatoryAssignment
                 }
             }
         }
-        public void GroupByType()
-        {
-            var groupedCreatures = creatures.GroupBy(c => c.GetType().Name);
-            foreach (var group in groupedCreatures)
-            {
-                TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Grouped by type: " + group.Key);
-                foreach (var creature in group)
-                {
-                    TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, creature.ToString());
-                }
-            }
-        }
+      
 
     }
 

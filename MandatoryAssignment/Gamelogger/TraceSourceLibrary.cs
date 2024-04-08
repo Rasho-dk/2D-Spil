@@ -5,12 +5,13 @@ namespace MandatoryAssignment.Gamelogger
 {
     public class TraceSourceLibrary
     {
+        #region Singleton
         /// <summary>
         /// This class is a singleton class, which means that there can only be one instance of the class.
         /// </summary>
-        private static TraceSourceLibrary _instance = new TraceSourceLibrary();
+        private static TraceSourceLibrary _instance = new TraceSourceLibrary(); //step 1
         /// <summary>
-        /// This object is used to lock the class, so that only one instance of the class can be created at a time.
+        /// This object is used to lock the class, so that only one instance of the class can be created at a time. Used for thread safety.
         /// </summary>
         private static readonly object _lock = new object();
 
@@ -24,10 +25,12 @@ namespace MandatoryAssignment.Gamelogger
 
         /// <summary>
         /// This method is used to get the instance of the class.
+        /// As we can see, the class is a singleton class, which means that there can only be one instance of the class. 
+        /// And its lazy loaded, whichh means that the instance is only created when it is needed.
         /// Using the lock object, we can ensure that only one instance of the class is created at a time.
         /// Which is important to ensure thread safety.
         /// </summary>
-        public static TraceSourceLibrary Instance
+        public static TraceSourceLibrary Instance //step 2
         {
             get
             {
@@ -35,7 +38,7 @@ namespace MandatoryAssignment.Gamelogger
                 {
                     if (_instance == null)
                     {
-                        _instance = new TraceSourceLibrary();
+                        _instance = new TraceSourceLibrary(); //lazy loading mean that the instance is only created when it is needed
                     }
                     return _instance;
                 }
@@ -45,7 +48,7 @@ namespace MandatoryAssignment.Gamelogger
         /// This is the constructor of the class, which is private, so that it can only be called from within the class. 
         /// This it is a default constructor, which is used to create a trace source object.
         /// </summary>
-        private TraceSourceLibrary()
+        private TraceSourceLibrary()  //step 3
         {
 
             if (traceSource == null)
@@ -62,6 +65,9 @@ namespace MandatoryAssignment.Gamelogger
             }
 
         }
+        #endregion End Singleton
+        
+         
         private void ReloadError()
         {
 

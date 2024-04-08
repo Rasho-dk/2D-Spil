@@ -2,6 +2,7 @@
 using MandatoryAssignment.Defenses;
 using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Interfaces;
+using MandatoryAssignment.Models;
 using MandatoryAssignment.Observer;
 using MandatoryAssignment.Weapons;
 using System;
@@ -19,10 +20,14 @@ namespace MandatoryAssignment
         //public int X { get; set; } // X-coordinate in the world
         //public int Y { get; set; } // Y-coordinate in the world
 
-        public Position Position { get; set; }
+        //public Position Position { get; set; }
+        public IPosition Position { get; set; }
 
-        public AttackItemBase AttackItem { get; set; }
-        public DefenceItemBase DefenceItem { get; set; }
+        //public AttackItemBase AttackItem { get; set; }
+        public IWeapon AttackItem { get; set; }
+        //public DefenceItemBase DefenceItem { get; set; }
+        public IDefence DefenceItem { get; set; }
+
 
 
         /// <summary>
@@ -35,6 +40,14 @@ namespace MandatoryAssignment
 
         }
 
+        /*
+         Her har jeg brugt Dependency Injection for at kunne injecte en IPosition, IWeapon og IDefence ind i WorldObject klassen.
+            for at kunne gøre det, har jeg lavet en interface for hver af de tre klasser, som jeg så kan injecte ind i WorldObject klassen.
+
+        Formålet med dette er at kunne gøre WorldObject klassen mere fleksibel, så jeg kan skifte mellem forskellige typer af IPosition, IWeapon og IDefence hvis der findes.
+        
+         */
+
         /// <summary>
         /// Constructor with parameters for the WorldObject class
         /// </summary>
@@ -44,7 +57,7 @@ namespace MandatoryAssignment
         /// <param name="position">Position of the object</param> // 
         /// <param name="attackItem">Attack item of the object</param>
         /// <param name="defenceItem">Defence item of the object</param>
-        protected WorldObject(string name, bool lootable, bool removeable, Position position, AttackItemBase attackItem, DefenceItemBase defenceItem)
+        protected WorldObject(string name, bool lootable, bool removeable, IPosition position, IWeapon attackItem, IDefence defenceItem)
         {
             Id = Guid.NewGuid().ToString().Substring(0, 8);
             Name = name;

@@ -1,15 +1,16 @@
-﻿using MandatoryAssignment;
-using MandatoryAssignment.Configuration;
+﻿using MandatoryAssignment.Configuration;
 using MandatoryAssignment.Creature;
 using MandatoryAssignment.Defenses;
 using MandatoryAssignment.Enumtype;
 using MandatoryAssignment.Factories;
 using MandatoryAssignment.Gamelogger;
 using MandatoryAssignment.Interfaces;
+using MandatoryAssignment.Linq;
+using MandatoryAssignment.Models;
 using MandatoryAssignment.Weapons;
 using SpilApp;
-using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 
 class Program
 {
@@ -31,29 +32,26 @@ class Program
             world.WorldName = test.WorldName;
 
 
-            IWeapon axe = WeaponFactory.Create(WeaponType.Axe);
-            IWeapon sowrd = WeaponFactory.Create(WeaponType.Sword);
-            IWeapon bow = WeaponFactory.Create(WeaponType.Bow);
+            //IWeapon axe = WeaponFactory.Create(WeaponType.Axe);
+            //IWeapon bow = WeaponFactory.Create(WeaponType.Bow);
 
-           
+
             IDefence shield = DefenceFactory.Create(DefenceType.Shield);
             IDefence helmet = DefenceFactory.Create(DefenceType.Helmet);
             IDefence armor = DefenceFactory.Create(DefenceType.Armor);
 
-
             ////conforming the the axe is an obj of type AttackItem not IWeapon
-            world.AddWorldObject(new MyWorldObj("Treasure Chest", true, false, new Position(50, 20), (AttackItemBase)axe, (DefenceItemBase)shield));
-            world.AddWorldObject(new MyWorldObj("Bonus Box", true, false, new Position(50, 20), (AttackItemBase)sowrd, (DefenceItemBase)helmet));
-            world.AddWorldObject(new MyWorldObj("Bonus Box", true, false, new Position(60, 20), (AttackItemBase)bow, (DefenceItemBase)armor));
+            world.AddWorldObject(new MyWorldObj("Treasure Chest", true, false, new Position(50, 20), WeaponFactory.Create(WeaponType.Axe), shield));
+            world.AddWorldObject(new MyWorldObj("Bonus Box", true, false, new Position(50, 20), WeaponFactory.Create(WeaponType.Sword), helmet));
+            world.AddWorldObject(new MyWorldObj("Bonus Box", true, false, new Position(60, 20), WeaponFactory.Create(WeaponType.Bow), armor));
 
 
             var dragon = new Dragon("Dragon", 100);
             var goblin = new Creature("Goblin", 150);
             var human = new Creature("Human", 100);
 
- 
 
-
+      
             world.AddCreature(dragon);
             world.AddCreature(goblin);
             world.AddCreature(human);
@@ -62,19 +60,31 @@ class Program
             goblin.Loot(world.WorldObjectsList()[1]);
             human.Loot(world.WorldObjectsList()[2]);
 
-
             //dragon.ReceiveReduceHitPoint(goblin.Hit());
-
+            var winner ="";
             for (int i = 0; i < 6; i++)
             {
-                dragon.Fight(goblin);
+                winner =  dragon.Fight(goblin);
                 //goblin.Fight(dragon);
 
                 if (dragon.IsDead())
                 {
                     break;
                 }
-            }
+            }           
+            
+            List<SuperCreature> superCreatures = TransformManager.Trasform<Creature, SuperCreature>(
+                 world.CreaturesList().Where(i => i.Id.Equals(winner)).Select(w => new Creature(w.Name, w.HitPoint)).ToList(),
+                 w => new SuperCreature(
+                 w.Id,
+                 w.Name,
+                 w.HitPoint * 2,
+                 power: w.HitPoint * 3 //new property
+                  
+                 ));
+
+            superCreatures.ForEach(c => Console.WriteLine(c));
+           
 
         }
         catch (Exception ex)
@@ -84,6 +94,6 @@ class Program
 
 
     }
- 
+
 
 }
