@@ -129,7 +129,9 @@ namespace MandatoryAssignment.Creature.Template
         }
 
 
-        #region Abstract methods to be implemented by subclasses
+        #region Abstract methods to be implemented by subclasses  Open/Close Principle SOLID. 
+        //We can extend the functionality of the Creature class by adding new subclasses without modifying the existing code
+        
         // Method for attacking opponent
         protected abstract void Attack(CreatureBase opponent);
 
