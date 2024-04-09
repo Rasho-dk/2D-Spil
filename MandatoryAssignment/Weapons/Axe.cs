@@ -8,8 +8,20 @@ namespace MandatoryAssignment.Weapons
 {
     public class Axe : AttackItemBase
     {
-        public override string Name { get { return "Axe"; } }
-        public override int Hit { get { return 20;  } } 
-        public override int Range { get { return 10; } }
+        public override string Name { 
+            get { return "Axe"; }
+            set { Name = value; }
+        }
+        public override int Hit 
+        { 
+            get { return 20;  }
+            set { Hit = value; }
+        
+        } 
+        public override int Range
+        { 
+            get { return 10; } 
+            set { Range = value; }
+        }
     }
 }

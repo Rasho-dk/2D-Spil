@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace MandatoryAssignment.Interfaces
 {
-    public enum WeaponType
+    public interface IPosition
     {
-        Axe,
-        Sword,
-        Bow
-
+        int X { get; set; }
+        int Y { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="MandatoryAssignment.Creature">
-    <Position X="0.5" Y="0.75" Width="1.5" />
+  <Class Name="MandatoryAssignment.CreatureBase">
+    <Position X="1.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQACAACAAAAAAAAAAAIAlAQAQAAAAEAAAAAAAAABAAA=</HashCode>
-      <FileName>Creature.cs</FileName>
+      <HashCode>AQACAACAAAAAAAAAAAIAlAQAQAAAAEAAACAAAAABAAA=</HashCode>
+      <FileName>CreatureBase.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="AttackItem" />
@@ -14,28 +14,27 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="MandatoryAssignment.World">
-    <Position X="9" Y="1.5" Width="1.5" />
-    <AssociationLine Name="WorldObjects" Type="MandatoryAssignment.WorldObject">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.446" Y="0.07" />
-      </MemberNameLabel>
-    </AssociationLine>
+    <Position X="9.25" Y="1.25" Width="1.5" />
     <AssociationLine Name="WorldObject" Type="MandatoryAssignment.WorldObject">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.401" Y="0.156" />
+        <Position X="-0.905" Y="0.346" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="worldObjects" Type="MandatoryAssignment.WorldObject">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.07" Y="0.446" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>MAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <HashCode>NAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAACAAQAAgA=</HashCode>
       <FileName>World.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Creature" />
       <Property Name="WorldObject" />
+      <Property Name="Creature" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="Creatures" />
-      <Property Name="WorldObjects" />
+      <Field Name="worldObjects" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="MandatoryAssignment.WorldObject">
@@ -91,21 +90,21 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MandatoryAssignment.Defences.Armor" Collapsed="true">
+  <Class Name="MandatoryAssignment.Defences.Armor">
     <Position X="7.75" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAAAAAABAAAAA=</HashCode>
       <FileName>Defences\Armor.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MandatoryAssignment.Defences.Helmet" Collapsed="true">
+  <Class Name="MandatoryAssignment.Defences.Helmet">
     <Position X="10" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAAAAAABAAAAA=</HashCode>
       <FileName>Defences\Helmet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MandatoryAssignment.Defences.Shield" Collapsed="true">
+  <Class Name="MandatoryAssignment.Defences.Shield">
     <Position X="12.5" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAIAAAAAAABAAAAA=</HashCode>

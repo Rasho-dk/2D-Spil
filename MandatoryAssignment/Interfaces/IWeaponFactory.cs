@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MandatoryAssignment.Enumtype;
 
 namespace MandatoryAssignment.Interfaces
 {
-    public interface IWeaponFactory
+    /*This interface is used to create a weapon of a specific type
+     *  Let the user choose between Axe, Sword, Bow and there own CreateWeapon
+     *         */
+    public interface IWeaponFactory 
     {
-        IWeapon CreateWeapon(WeaponType type);
+        static abstract IWeapon Create(WeaponType type);
+        static abstract IWeapon Create(string name, int hit, int range);
     }
 }

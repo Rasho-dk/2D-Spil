@@ -9,9 +9,9 @@ namespace MandatoryAssignment.Weapons
 {
     public abstract class AttackItemBase : IWeapon
     {
-        public abstract string Name { get; }
-        public abstract int Hit { get; }
-        public abstract int Range { get; }
+        public abstract string Name { get;  set; }
+        public abstract int Hit { get; set; }
+        public abstract int Range { get; set; }
 
 
         public override string ToString()
