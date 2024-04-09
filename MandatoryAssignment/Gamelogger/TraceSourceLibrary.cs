@@ -5,6 +5,8 @@ namespace MandatoryAssignment.Gamelogger
 {
     public class TraceSourceLibrary
     {
+
+
         #region Singleton
         /// This class is a singleton class, which means that there can only be one instance of the class.
         /// </summary>
@@ -15,7 +17,7 @@ namespace MandatoryAssignment.Gamelogger
 
         //private GameConfiguration GameConfiguration { get; set; }
 
-        /// This object is used to create a trace source, which is used to log events in the game.
+        /// This object is used to create a trace source, which is used to log events in the game. 
         private TraceSource traceSource;
 
         /// <summary>
