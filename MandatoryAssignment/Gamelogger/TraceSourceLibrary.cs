@@ -6,21 +6,16 @@ namespace MandatoryAssignment.Gamelogger
     public class TraceSourceLibrary
     {
         #region Singleton
-        /// <summary>
         /// This class is a singleton class, which means that there can only be one instance of the class.
         /// </summary>
         private static TraceSourceLibrary _instance = new TraceSourceLibrary(); //step 1
-        /// <summary>
         /// This object is used to lock the class, so that only one instance of the class can be created at a time. Used for thread safety.
-        /// </summary>
         private static readonly object _lock = new object();
 
 
         //private GameConfiguration GameConfiguration { get; set; }
 
-        /// <summary>
         /// This object is used to create a trace source, which is used to log events in the game.
-        /// </summary>
         private TraceSource traceSource;
 
         /// <summary>

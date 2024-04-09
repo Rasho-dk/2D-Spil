@@ -211,18 +211,22 @@ namespace MandatoryAssignment.Creature.Template
                 if (AttackItems.Count < 2)
                 {
                     AttackItems.Add((AttackItemBase)worldObject.AttackItem);
+                    TraceSourceLibrary.LogInformation(1, $"{Name} has looted {worldObject.AttackItem.Name}!\n");
                 }
                 if (DefenceItems.Count < 2)
                 {
                     DefenceItems.Add((DefenceItemBase)worldObject.DefenceItem);
+                    TraceSourceLibrary.LogInformation(1, $"{Name} has looted {worldObject.DefenceItem.Name}!\n");
                 }
                 if (AttackItems.Count == 2)
                 {
                     AttackItems.RemoveAt(0);
+                    TraceSourceLibrary.LogInformation(1, $"{Name} has dropped {worldObject.AttackItem.Name}!\n");
                 }
                 if (DefenceItems.Count == 2)
                 {
                     DefenceItems.RemoveAt(0);
+                    TraceSourceLibrary.LogInformation(1, $"{Name} has dropped {worldObject.DefenceItem.Name}!\n");
                 }
             }
         }

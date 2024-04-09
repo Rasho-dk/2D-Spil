@@ -83,7 +83,7 @@ namespace MandatoryAssignment
         public void AddCreature(CreatureBase creature)
         {
             creatures.Add(creature);
-            TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature added to world: " + creature.ToString());
+            TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "Creature added to world: " + creature.ToString() + "\n");
 
             creature.Attach(this);
         }
@@ -94,7 +94,7 @@ namespace MandatoryAssignment
         public void AddWorldObject(WorldObject worldObject)
         {
             worldObjects.Add(worldObject);
-            TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "WorldObject added to world: " + worldObject);
+            TraceSourceLibrary.LogEvent(TraceEventType.Information, 1, "WorldObject added to world: " + worldObject + "\n");
         }
 
         /// <summary>

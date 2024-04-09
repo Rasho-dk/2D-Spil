@@ -54,11 +54,11 @@ class Program
       
             world.AddCreature(dragon);
             world.AddCreature(goblin);
-            world.AddCreature(human);
+            //world.AddCreature(human);
 
             dragon.Loot(world.WorldObjectsList()[0]);
             goblin.Loot(world.WorldObjectsList()[1]);
-            human.Loot(world.WorldObjectsList()[2]);
+            //human.Loot(world.WorldObjectsList()[2]);
 
             //dragon.ReceiveReduceHitPoint(goblin.Hit());
             var winner ="";

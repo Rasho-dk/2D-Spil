@@ -37,10 +37,8 @@ namespace MandatoryAssignment.Configuration
         }
         #endregion End Singleton
 
-        /// <summary>
         /// Default constructor
         /// This should be private, so that it can only be called from within the class.
-        /// </summary>
         private GameConfiguration()
         {
             //Her sættes default værdier for spillet
